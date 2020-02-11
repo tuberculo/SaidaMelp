@@ -31,12 +31,20 @@ escolhidos <- c(Caso_min, 57, 54, 56)
 # ParaGraf$Caso <- factor(GerAnualporTipoTerm$Caso, levels = c(Caso_min, 57, 54, 56), labels = c("Referência","IS25","IS22","IS21"))
 
 GerAnualporTipoTerm <- mutate(GerAnualporTipoTerm, NomeCaso = factor(Caso, levels = escolhidos, labels = c("Referência","IS25","IS22","IS21")))
+
+# Gráfico de área
 ggplot(filter(GerAnualporTipoTerm, Caso %in% escolhidos, Tipo %in% c("Carvao", "Gas", "Nuclear", "OutrosExistentes"), 
   Energia == "Media")) + geom_area(aes(x = Ano, y = Gera, fill = Tipo)) + facet_grid(~NomeCaso) + 
   scale_fill_brewer(palette = "BrBG") + ggtitle("Geração das usinas despacháveis") + xlab("") +
   ylab("Geração (MWano)") + labs(fill = "Fonte") + theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(text = element_text(size = 16)) + 
   geom_vline(aes(xintercept = as.numeric(2022)), linetype = 4, colour = "black")
+#Gráfico de coluna
+ggplot(filter(GerAnualporTipoTerm, Caso %in% escolhidos, Tipo %in% c("Carvao", "Gas", "Nuclear", "OutrosExistentes"), 
+  Energia == "Media")) + geom_col(aes(x = Ano, y = Gera, fill = Tipo)) + facet_grid(~NomeCaso) + 
+  scale_fill_brewer(palette = "BrBG") + ggtitle("Geração das usinas despacháveis") + xlab("") +
+  ylab("Geração (MWano)") + labs(fill = "Fonte") + theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
+  theme(plot.title = element_text(hjust = 0.5)) + theme(text = element_text(size = 16))
 
 # ggplot(filter(GerAnualporTipoTerm, Tipo %in% c("Carvao", "Gas", "Nuclear", "OutrosExistentes"), 
 #       Energia == "Media")) + geom_col(aes(x = Ano, y = Gera, fill = Tipo)) + facet_wrap(vars(Caso)) + scale_fill_brewer(palette = "BrBG")
